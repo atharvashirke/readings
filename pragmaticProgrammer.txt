@@ -1,0 +1,86 @@
+Some notes/key takeaways from David Thomas and Andrew Hunt's The Pragmatic Programmer.
+----------
+Ch.1
+- your technical skillset is your biggest asset. It is also depreciating as new technologies emerge. To maintain your value in the market as an engineer, it is up to you to ensure you are familiar with new tools and methods.
+    - learn at least one new language every year
+    - read a technical book each month
+    - take classes
+    - participate in local user groups and meetups
+    - experiment with different environments (OS, IDEs, etc.)
+    - stay current (read the news and blog posts)
+- A good idea is an orphan without communication.
+    - Neuro Linguistic Programming Presupposition - "The meaning of your communication is the response you get"
+    - Basically, know your audience
+    - Know what you want to say. Start with an outline if necessary
+    - Make it look good. Your ideas should be communicated with visual style. Use stylesheets, markdown, etc. if necessary.
+- This also extends to documentation. Use source code comments to develop documentations for your API. Don't make exhaustive comments for every function though, as this violates DRY principles. Instead focus on discussing "why" something is done, it's purpose/goal, for non-API functions.
+----------
+Ch. 2
+- Good design is easier to change than bad design (Easier to Change Principle)
+    - Well designed software has isolated concerns and encapsulation
+        - makes it easier for users to adapt software to their needs
+- "Did the thing I just did make the overall system easier or harder to
+   change?"
+- As requirements change, developers spend much of their time in "maintenance mode", changing the system to adapt to evolving requirements. This is a routine part of the development process.
+    - When we perform mainenance, we find and change the representation of knowledge in the application.
+    - The only way to do this reliably and keep things simple to understand is to follow the DRY principle: Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.
+    - Rule of thumb: When a single part of your application has to change, do you find yourself making that change in multiple places and in different formats? If so, your code isn't DRY.
+- Not all code duplication is knowledge duplication. If two functions have the same structure and involve the same operations, but operate on data that represents different pieces of knowledge, it's not duplication.
+- Don't comment all your functions for the sake of commenting. Write your code so it's self-documenting (purpose of your code can be clearly understood just by reading your code). Your comments should only serve to add information that's not already clearly interpretable.
+- DRY principles also extend to our data structures.
+    - Fields in our data structures should contain unique pieces of information. If one or more fields have information that can be deduced from other fields, it's better to make that field a calculated field from a method.
+    - Where possible, always use accessor functions to read and weite attributes of objects. It'll make it easier to add functionality in the future.
+        - Meyer's Uniform Access Principle: All services offered by a module should be available through a uniform notation which does not betray whether they are implemented through storage or through computation.
+            - basically accessing object fields should be the same regardless if the actual field is a stored field or computed field
+    - If none of this makes sense, I highly recommend looking through the code examples of this chapter.
+- Whenever your code interacts with an external system (API, microservice, etc.) you introduce a violation to the DRY principle. This is because your code needs to understand the specific API representation/schema of the other systems interface. Since both your application and the external application both have information about this representation, by definition you are duplicating info and thus violating DRY. Ways to mitigate this:
+    - For internal APIs, look for tools that specify the API in a neutral format. Ideally, the tool will store all your APIs in a central repository, allowing them to be shared across teams.
+        - A lot of these tools will generate documentation, mock APIs, and functional tests for you.
+        - ex: stoplight/swaggerhub
+- Interdeveloper duplication: when developers working on the same systems reimplement the same functionality
+    - ex: During the Y2K compliance survey, auditors found 10k programs that each contained different versions of Social Security Number validation code.
+    - the best way to deal with this is to encourage active and frequent communication between developers.
+        - Appoint a team member as the project librarian, whose job it is to facilitate the exchange of knowledge
+        - Have a central place in the source tree where utility routines and scripts are depositied.
+        - Make a habit of reading other people's source code and documentation
+- In computing, two or more things are orthogonal if changes in one fo not affect any of the others.
+    - In a well-designed system database code is orthogonal to user interface: you can change the interface without affecting the database and vice versa
+- We want to design components that are self-contained, independent, with a single well-defined purpose. When components are isolated, you know you can change one without having to worry about the rest.
+- Ask yourself: If I dramatically change the requirements behind a particular function, how many modules are affected? In an orthogonal system, the answer is one.
+- When you bring in a toolkit or library, ask yourself whether it imposes changes on your code that shouldn't be there. If the module doesn't affect other modules in your codebase, then it's orthogonal.
+- Techniques to maintain orthogonality when you code:
+    - Write shy code - modules that don't reveal anything unnecessary ot other modules and don't rely on other modules' implementations. If you need to change an object's state, get the object to do it for you (class method). This way your code remains isolated from other code implementations.
+    - Avoid global data - When code references global data, it ties itself to components that share that data. Your code is easier to understand and maintain if you explicitly pass any required context into your modules.
+    - Avoid similar functions - Duplicate code is a symptom of structural problems.
+- Get in the habit of being critical of your code. Look for opportunities to improve structure and orthogonality (this process is called refactoring).
+- An orthogonally designed and implemented system is easier to test, because the interactions between system components are formalized and limited.
+    - module level (or unit) testing is easy to specify and perform compared to integration testing
+    - If it requires importing large amounts of your systems code to build unit tests for a module, your module is not well decoupled from the rest of your system. It is not orthogonal.
+- Make yoru documentation orthogonal by using Markdown. Write your content, and allow the presentation tool that renders your markdown content to deal with appearance/formatting.
+Reversability
+- There are no final decisions when it comes to design decisions. You will often have to change between vendors for components in your application system. If you stick to DRY and orthogonal principles, these changes should be easy to implement.
+- Maintain a flexible architecture
+    - hide third-party APIs behind your own abstraction layers
+    - break your code into components
+Tracer Bullets
+- tracer bullet development - development technique where developers are given immediate feedback under actual conditions with a moving goal.
+- Look for important requirements that define the system. Look for areas where there's the biggest risks. Prioritize your development so that these are the first areas you code.
+    - Example: Say I'm building a blog application. My biggest priorities are 1) way to write and store content to online persistent storage 2) query storage and render a webpage with content. In tracer bullet development I'd first start by building a prototype that can store simple text on a database, and then render it to the index page of a site when accessed on a browser. This prototype verifies that my application system can satisfy the basic requirements, and my team  and I can work in parallel to add functionality.
+- Tracer code is not disposable. it will end up becoming the source code of your project. It contains all the error checking, structuring, and documentation that any production code is expected to have.
+- Advantages of tracer bullet development:
+    - Users get to see something working early
+    - Developers build a structure to work in
+    - You have an integration platform
+    - You have something to demonstrate
+    - You have a better feel for overall progress
+Prototypes
+- Prototypes allow us to cheaply explore elements of our application system without committing to building the actual application.
+- They can be code based, but we can also use post-it notes for prototyping workflow and application logic
+    - user interfaces can be prototyped with whiteboards or Figma
+- Code-based prototyping must not be misinterpreted as complete, production ready code.
+    - You could build a great prototype of a car out of balsa wood and duct tape, but you wouldn't try to drive it in rush-hour traffic
+Domain Languages
+- Computing languages influence how you design solutions within your application
+- Use external languages (such as JSON, YAML, CSV) for testing/configuration to avoid opinionated implementations in your internal language
+    - This can add extra work, since you'll need to write parsers for the external language
+    - Don't spend more effort on this than you save. Writing domain language support adds cost to your project, and you need to be convinced that there are savings.

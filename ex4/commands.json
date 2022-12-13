@@ -1,0 +1,11 @@
+{
+    "commands": {
+        "P" : "pensize",
+        "D" : "pendown", 
+        "W" : 180,
+        "N" : 90, 
+        "E" : 0,
+        "S" : 270, 
+        "U" : "penup"
+    }
+}
