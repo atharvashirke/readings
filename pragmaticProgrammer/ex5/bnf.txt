@@ -1,0 +1,10 @@
+<meridiem> ::= am | pm
+<digit> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+<h_ten> ::= 1
+<h_ones> ::= 0 | 1 | 2
+<m_ten> ::= 0 | 1 | 2 | 3 | 4 | 5
+<mil_h_one> ::= 0 | 1 | 2 | 3
+<stdHour> ::= <digit> | <h_ten><h_ones>
+<milHour> ::= 0<digit> | 1<digit> | 2<mil_h_one>
+<mins> ::= <m_ten><digit>
+<time> ::= <stdHour><meridiem> | <stdHour>:<mins><meridiem> | <stdHour>:<mins> | <milHour>:<mins>

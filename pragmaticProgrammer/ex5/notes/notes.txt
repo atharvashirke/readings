@@ -1,0 +1,51 @@
+I never worked on Backus-Naur Form or Parse Trees, so I'm going to keep some notes here on the subject as I do research for implementing my answer to this question.
+----------
+Introduction to Grammars and BNF -- Mary Elaine Califf
+- Syntax - the structure of language
+- Semantics - the meaning of language
+- Wrong syntax results in no meaning
+    - correct syntax could also result in something meaningless
+        - We want to ensure syntactically correct code in a programming language has meaning.
+- Terminals, or Terminal Symbols
+    - base tokens of the language
+    - in programming languages:
+        - keywords
+        - operators and other symbols
+        - characters that can be used in identifiers, numbers, or other program elements.
+- Nonterminals, or nonterminal symbols
+    - Used to represent pieces of the structure of a language
+        - in English this would be "noun", "verb", "sentence"
+        - in programming languages this would be "statement" or "condition"
+        - identifies pieces of the syntax that it makes sense to work with
+- Productions, or Production rules
+    - rules that make up the grammar
+    - Translates a nonterminal to a swquence of one or more nonterminals or terminals
+    - ex: a sentence is a noun phrase followed by a verb phrase
+    - ex: a verb phrase is a verb or a verb followed by a noun phrase
+- We can express a grammar with different techniques
+    - Backus Naur Form (BNF)
+        - John Backus, designer of FORTRAN
+        - Peter Naur
+    - Extended Backus Naur Form (EBNF)
+    - Syntax Diagrams
+- Elements of BNF
+    - terminals are simply written out: "while"
+    - nonterminals are enclosed in angle brackets: <statement>
+    - productions are in the form:
+        <nonterminal> ::= <sequence of terminals or nonterminals>
+        <sentence> ::= <noun phrase><verb phrase>
+    - We can use | to represent or
+- Simple Example of Backus Naur Forms
+ <digit> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+ <integer> ::= <digit> | <digit><integer> # Notice how definition is recursive
+ <floating point> ::= <integer>.<integer>
+ - NOTE: I've kept an example of a BNF for a C-based language as a png in the same directory as these notes.
+- Lexical vs Phrase Structure
+    - Lexical structure is the structure of valid tokens in a language:
+        - numbers
+        - identifiers
+    - Phrase structure is the larger structure of sentences and programs
+    - We usually use separate grammars to handle these because grammars for both get very complex
+    - compilers and interpreters usually also handle these separately
+- Parse Trees - diagram of the struture of a language fragment, given a grammar
+    - I've kept an image of a parse tree in the same dir of this notes.txt

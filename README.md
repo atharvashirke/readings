@@ -11,4 +11,5 @@ This repository collects information and completed exercises from books I've rea
 
 - **The Pragmatic Programmer** by Andy Hunt and Dave Thomas (In Progress)
 - **Javascript: The Definitive Guide** by David Flanagan (In Progress)
-
+- **Design Patterns. Elements of Reusable Object Oriented Software** by Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides
+- **The Algorithm Design Manual** by Steven Skiena
